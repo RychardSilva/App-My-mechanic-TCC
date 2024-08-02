@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login e Registro</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/login/styles.css">
 </head>
 <body>
     <div class="container">
-        <!-- Adicione a imagem do logo aqui -->
         <div class="logo">
-            <img src="/img/Logo.png" alt="Logo">
+            <img src="/imgs/Logo.png" alt="Logo">
         </div>
         <div class="form-container" id="formContainer">
             <div class="form" id="loginForm">
@@ -26,25 +25,9 @@
                     </div>
                     <button type="submit">Login</button>
                 </form>
-                <p>Não tem uma conta? <a href="#" id="showRegister">Registre-se</a></p>
-            </div>
-            <div class="form" id="registerForm" style="display: none;">
-                <h2>Registro</h2>
-                <form action="php/register.php" method="POST">
-                    <div class="form-group">
-                        <label for="registerUsername">Nome de Usuário</label>
-                        <input type="text" id="registerUsername" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" name="email" required>
-                    </div>
-                    <button type="submit">Registrar</button>
-                </form>
-                <p>Já tem uma conta? <a href="#" id="showLogin">Login</a></p>
+                <p>Não tem uma conta? <a href="/register/register.html" id="showRegister">Registre-se</a></p>
             </div>
         </div>
     </div>
-    <script src="/login/index.js"></script>
 </body>
 </html>

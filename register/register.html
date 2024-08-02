@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="/login/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="logo">
+            <img src="/imgs/Logo.png" alt="Logo">
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <div class="form" id="registerForm">
+                <h2>Registro</h2>
+                <form action="php/register.php" method="POST">
+                    <div class="form-group">
+                        <label for="registerusername">Nome de Usuário</label>
+                        <input type="text" id="registerusername" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telephone">Telefone</label>
+                        <input type="text" id="registertelephone" name="telephone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registrasenha">Senha</label>
+                        <input type="password" id="registraesenha" name="Senha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipoUsuario">Tipo de Usuário</label>
+                        <select id="tipoUsuario" name="tipoUsuario" required>
+                            <option value="PessoaFisica">Pessoa Física</option>
+                            <option value="PessoaJuridica">Pessoa Jurídica</option>
+                            <option value="PrestadorDeServico">Prestador de Serviço</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numeroendereco">Informe o Número do Endereço</label>
+                        <input type="number" id="numeroendereco" name="numeroendereco" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="complementoendereco">Informe o Complemento do Endereço</label>
+                        <input type="text" id="complementoendereco" name="complementoendereco">
+                    </div>
+
+                    <button type="submit">Registrar</button>
+
+                </form>
+                <p>Já tem uma conta? <a href="/login/login.html" id="showLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
