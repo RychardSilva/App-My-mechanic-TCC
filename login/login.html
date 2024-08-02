@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Registro</title>
+    <link rel="stylesheet" href="/login/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Adicione a imagem do logo aqui -->
+        <div class="logo">
+            <img src="/img/Logo.png" alt="Logo">
+        </div>
+        <div class="form-container" id="formContainer">
+            <div class="form" id="loginForm">
+                <h2>Login</h2>
+                <form action="php/login.php" method="POST">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Senha</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Não tem uma conta? <a href="#" id="showRegister">Registre-se</a></p>
+            </div>
+            <div class="form" id="registerForm" style="display: none;">
+                <h2>Registro</h2>
+                <form action="php/register.php" method="POST">
+                    <div class="form-group">
+                        <label for="registerUsername">Nome de Usuário</label>
+                        <input type="text" id="registerUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" name="email" required>
+                    </div>
+                    <button type="submit">Registrar</button>
+                </form>
+                <p>Já tem uma conta? <a href="#" id="showLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="/login/index.js"></script>
+</body>
+</html>
