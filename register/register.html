@@ -21,22 +21,22 @@
                 <form action="php/register.php" method="POST">
                     <div class="form-group">
                         <label for="registerusername">Nome de Usuário</label>
-                        <input type="text" id="registerusername" name="username" required>
+                        <input type="text" id="registerusername" name="username" autocomplete="username">
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="telephone">Telefone</label>
-                        <input type="text" id="registertelephone" name="telephone" required>
+                        <label for="registertelephone">Telefone</label>
+                        <input type="text" id="registertelephone" name="telephone" autocomplete="tel">
                     </div>
 
                     <div class="form-group">
                         <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" name="email" required>
+                        <input type="email" id="registerEmail" name="email" autocomplete="email" required>
                     </div>
 
                     <div class="form-group">
                         <label for="registrasenha">Senha</label>
-                        <input type="password" id="registraesenha" name="Senha" required>
+                        <input type="password" id="registrasenha" name="password" autocomplete="new-password" required>
                     </div>
 
                     <div class="form-group">
@@ -48,14 +48,53 @@
                         </select>
                     </div>
 
+                    <!-- Campos adicionais para Pessoa Física -->
+                    <div id="pessoaFisicaFields" class="additional-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" id="cpf" name="cpf" autocomplete="cpf">
+                        </div>
+                        <div class="form-group">
+                            <label for="nomeCompleto">Nome Completo</label>
+                            <input type="text" id="nomeCompleto" name="nomeCompleto" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataNasc">Data de Nascimento</label>
+                            <input type="date" id="dataNasc" name="dataNasc" autocomplete="bday">
+                        </div>
+                    </div>
+
+                    <!-- Campos adicionais para Pessoa Jurídica -->
+                    <div id="pessoaJuridicaFields" class="additional-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="cnpj">CNPJ</label>
+                            <input type="text" id="cnpj" name="cnpj" autocomplete="cnpj">
+                        </div>
+                        <div class="form-group">
+                            <label for="razaoSocial">Razão Social</label>
+                            <input type="text" id="razaoSocial" name="razaoSocial" autocomplete="organization">
+                        </div>
+                        <div class="form-group">
+                            <label for="nomeSocial">Nome Social</label>
+                            <input type="text" id="nomeSocial" name="nomeSocial" autocomplete="name">
+                        </div>
+                    </div>
+
+
+                    <div id="prestadorDeServicoFields" class="additional-fields" style="display: none;">
+
+                    </div>
+
                     <div class="form-group">
                         <label for="numeroendereco">Informe o Número do Endereço</label>
-                        <input type="number" id="numeroendereco" name="numeroendereco" required>
+                        <input type="number" id="numeroendereco" name="numeroendereco" autocomplete="street-address"
+                            required>
                     </div>
 
                     <div class="form-group">
                         <label for="complementoendereco">Informe o Complemento do Endereço</label>
-                        <input type="text" id="complementoendereco" name="complementoendereco">
+                        <input type="text" id="complementoendereco" name="complementoendereco"
+                            autocomplete="address-line2">
                     </div>
 
                     <button type="submit">Registrar</button>
@@ -65,6 +104,8 @@
             </div>
         </div>
     </div>
+
+    <script src="/register/register.js"></script>
 </body>
 
 </html>
