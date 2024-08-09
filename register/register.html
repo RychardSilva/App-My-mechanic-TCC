@@ -18,25 +18,25 @@
         <div class="form-container" id="formContainer">
             <div class="form" id="registerForm">
                 <h2>Registro</h2>
-                <form method="POST" action="register.php" >
+                <form method="POST" action="register.php">
                     <div class="form-group">
-                        <label for="register">Nome de Usuário</label>
-                        <input type="text" id="registerusername" name="registerusername" autocomplete="username">
+                        <label for="username">Nome de Usuário</label>
+                        <input type="text" id="username" name="registerusername" autocomplete="username" required>
                     </div>
 
                     <div class="form-group">
                         <label for="telephone">Telefone</label>
-                        <input type="text" id="registertelephone" name="registertelephone" autocomplete="telephone">
+                        <input type="text" id="telephone" name="registertelephone" autocomplete="telephone" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="registeremail" name="registeremail" autocomplete="email" required>
+                        <input type="email" id="email" name="registeremail" autocomplete="email" required>
                     </div>
 
                     <div class="form-group">
                         <label for="senha">Senha</label>
-                        <input type="password" id="registrasenha" name="registersenha" autocomplete="senha" required>
+                        <input type="password" id="senha" name="registersenha" autocomplete="senha" required>
                     </div>
 
                     <div class="form-group">
@@ -80,21 +80,18 @@
                         </div>
                     </div>
 
-
                     <div id="prestadorDeServicoFields" class="additional-fields" style="display: none;">
-
+                        <!-- Adicione campos específicos para Prestador de Serviço aqui -->
                     </div>
 
                     <div class="form-group">
-                        <label for="numeroendereco">Informe o Número do Endereço</label>
-                        <input type="number" id="numeroendereco" name="numeroendereco" autocomplete="street-address"
-                            required>
+                        <label for="numend">Informe o Número do Endereço</label>
+                        <input type="number" id="numend" name="numeroendereco" autocomplete="street-address" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="complementoendereco">Informe o Complemento do Endereço</label>
-                        <input type="text" id="complementoendereco" name="complementoendereco"
-                            autocomplete="address-line2">
+                        <label for="complementoend">Informe o Complemento do Endereço</label>
+                        <input type="text" id="complementoend" name="complementoendereco" autocomplete="address-line2">
                     </div>
 
                     <button type="submit">Registrar</button>
