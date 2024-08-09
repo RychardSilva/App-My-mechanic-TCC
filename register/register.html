@@ -5,38 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="/login/styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
 <body>
 
     <div class="container">
         <div class="logo">
-            <img src="/imgs/Logo.png" alt="Logo">
+            <img src="../imgs/Logo.png" alt="Logo">
         </div>
 
         <div class="form-container" id="formContainer">
             <div class="form" id="registerForm">
                 <h2>Registro</h2>
-                <form action="php/register.php" method="POST">
+                <form method="POST" action="php/register.php" >
                     <div class="form-group">
-                        <label for="registerusername">Nome de Usuário</label>
-                        <input type="text" id="registerusername" name="username" autocomplete="username">
+                        <label for="register">Nome de Usuário</label>
+                        <input type="text" id="registerusername" name="registerusername" autocomplete="username">
                     </div>
 
                     <div class="form-group">
-                        <label for="registertelephone">Telefone</label>
-                        <input type="text" id="registertelephone" name="telephone" autocomplete="tel">
+                        <label for="telephone">Telefone</label>
+                        <input type="text" id="registertelephone" name="registertelephone" autocomplete="telephone">
                     </div>
 
                     <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" name="email" autocomplete="email" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="registeremail" name="registeremail" autocomplete="email" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="registrasenha">Senha</label>
-                        <input type="password" id="registrasenha" name="password" autocomplete="new-password" required>
+                        <label for="senha">Senha</label>
+                        <input type="password" id="registrasenha" name="registersenha" autocomplete="senha" required>
                     </div>
 
                     <div class="form-group">
@@ -100,12 +100,12 @@
                     <button type="submit">Registrar</button>
 
                 </form>
-                <p>Já tem uma conta? <a href="/login/login.html" id="showLogin">Login</a></p>
+                <p>Já tem uma conta? <a href="../login/login.html" id="showLogin">Login</a></p>
             </div>
         </div>
     </div>
 
-    <script src="/register/register.js"></script>
+    <script src="../register/register.js"></script>
 </body>
 
 </html>
