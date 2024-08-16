@@ -9,26 +9,31 @@ $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
 $numeroendereco = isset($_POST['numeroendereco']) ? $_POST['numeroendereco'] : null;
 $complementoendereco = isset($_POST['complementoendereco']) ? $_POST['complementoendereco'] : null;
 
+// Aplicar hash MD5 à senha
+$registersenha = md5($registersenha);
+
+
 if (!$registersenha) {
     die("Erro: Senha não foi enviada corretamente.");
 }
 
+
 if ($registerusername && $registertelephone && $registeremail && $registersenha && $tipoUsuario && $numeroendereco) {
-    $stmt = $conn->prepare("INSERT INTO Usuario (nome, telefone, TipoUsuario, email, senha, NumeroEnd, ComplementoEnd) VALUES (?,?,?,?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO Usuario (nomeUsuario, telefone, tipoUsuario, email, senha, numeroEnd, complementoEnd) VALUES (?,?,?,?,?,?,?)");
     $stmt->bind_param("sssssis", $registerusername, $registertelephone, $tipoUsuario, $registeremail, $registersenha, $numeroendereco, $complementoendereco);
 
     if ($stmt->execute()) {
         $stmt->close();
-
         $userId = $conn->insert_id; // Obtém o ID do usuário recém-inserido
+        echo $tipoUsuario;
 
-        if ($tipoUsuario === 'PessoaFisica') {
+        if ($tipoUsuario == 'pessoaFisica') {
             $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
             $nomeCompleto = isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : null;
             $dataNasc = isset($_POST['dataNasc']) ? $_POST['dataNasc'] : null;
 
             if ($cpf && $nomeCompleto && $dataNasc) {
-                $stmt = $conn->prepare("INSERT INTO PessoaFisica (id_usuario, cpf, NomeCompleto, DataNasc) VALUES (?,?,?,?)");
+                $stmt = $conn->prepare("INSERT INTO pessoaFisica (idUsuario, cpf, nomeCompleto, dataNasc) VALUES (?,?,?,?)");
                 $stmt->bind_param("isss", $userId, $cpf, $nomeCompleto, $dataNasc);
 
                 if ($stmt->execute()) {
@@ -42,13 +47,13 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
             } else {
                 echo "Erro: Todos os campos de Pessoa Física são obrigatórios.";
             }
-        } elseif ($tipoUsuario === 'PessoaJuridica') {
+        }elseif ($tipoUsuario == 'pessoaJuridica') {
             $cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : null;
             $razaoSocial = isset($_POST['razaoSocial']) ? $_POST['razaoSocial'] : null;
             $nomeSocial = isset($_POST['nomeSocial']) ? $_POST['nomeSocial'] : null;
 
             if ($cnpj && $razaoSocial && $nomeSocial) {
-                $stmt = $conn->prepare("INSERT INTO PessoaJuridica (id_usuario, cnpj, RazaoSocial, NomeSocial) VALUES (?,?,?,?)");
+                $stmt = $conn->prepare("INSERT INTO pessoaJuridica (idUsuario, cnpj, razaoSocial, nomeSocial) VALUES (?,?,?,?)");
                 $stmt->bind_param("isss", $userId, $cnpj, $razaoSocial, $nomeSocial);
 
                 if ($stmt->execute()) {
@@ -62,10 +67,10 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
             } else {
                 echo "Erro: Todos os campos de Pessoa Jurídica são obrigatórios.";
             }
-        } elseif ($tipoUsuario === 'PrestadorDeServico') {
-            $stmt = $conn->prepare("INSERT INTO PrestadorDeServico (id_usuario) VALUES (?)");
+        }elseif ($tipoUsuario == 'PrestadorDeServico') {
+            $stmt = $conn->prepare("INSERT INTO prestadordeservico (id_Usuario) VALUES (?)");
             $stmt->bind_param("i", $userId);
-
+               
             if ($stmt->execute()) {
                 $stmt->close();
                 $conn->close();
@@ -81,4 +86,3 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
 } else {
     echo "Erro: Todos os campos são obrigatórios.";
 }
-?>
