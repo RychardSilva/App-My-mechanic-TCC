@@ -27,13 +27,13 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
         $userId = $conn->insert_id; // Obtém o ID do usuário recém-inserido
         echo $tipoUsuario;
 
-        if ($tipoUsuario == 'pessoaFisica') {
+        if ($tipoUsuario == 'PessoaFisica') {
             $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
             $nomeCompleto = isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : null;
             $dataNasc = isset($_POST['dataNasc']) ? $_POST['dataNasc'] : null;
 
             if ($cpf && $nomeCompleto && $dataNasc) {
-                $stmt = $conn->prepare("INSERT INTO pessoaFisica (idUsuario, cpf, nomeCompleto, dataNasc) VALUES (?,?,?,?)");
+                $stmt = $conn->prepare("INSERT INTO pessoaFisica (id_Usuario, cpf, nomeCompleto, dataNasc) VALUES (?,?,?,?)");
                 $stmt->bind_param("isss", $userId, $cpf, $nomeCompleto, $dataNasc);
 
                 if ($stmt->execute()) {
@@ -47,13 +47,13 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
             } else {
                 echo "Erro: Todos os campos de Pessoa Física são obrigatórios.";
             }
-        }elseif ($tipoUsuario == 'pessoaJuridica') {
+        }elseif ($tipoUsuario == 'PessoaJuridica') {
             $cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : null;
             $razaoSocial = isset($_POST['razaoSocial']) ? $_POST['razaoSocial'] : null;
             $nomeSocial = isset($_POST['nomeSocial']) ? $_POST['nomeSocial'] : null;
 
             if ($cnpj && $razaoSocial && $nomeSocial) {
-                $stmt = $conn->prepare("INSERT INTO pessoaJuridica (idUsuario, cnpj, razaoSocial, nomeSocial) VALUES (?,?,?,?)");
+                $stmt = $conn->prepare("INSERT INTO pessoajuridica (id_Usuario, cnpj, razaoSocial, nomeSocial) VALUES (?,?,?,?)");
                 $stmt->bind_param("isss", $userId, $cnpj, $razaoSocial, $nomeSocial);
 
                 if ($stmt->execute()) {
