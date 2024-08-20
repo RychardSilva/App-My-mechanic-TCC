@@ -22,9 +22,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body>
     <h1>Bem vindo, <?php echo ($_SESSION["username"]); ?></h1>
     <a href="sair.php">Sair</a>
-    <a href="../users/pessoaJuridica/cadastroservico.php">Cadastro de Serviço</a>
-    <a href="../users/pessoaJuridica/cadastroveiculo.php">Cadastro Veiculo</a>
-
+    <a href="../users/pessoaJuridica/cadastroservico.php">Cadastro de Serviços</a>
+    <a href="../users/pessoaJuridica/cadastroveiculo.php">Cadastre seus Veiculos</a>
+    <a href="../users/pessoaJuridica/consultaVeiculos.php">Consultar veículos cadastrados</a>
+    <a href="../users/pessoaJuridica/cadastrarOficina.php">Cadastrar dados Oficina</a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

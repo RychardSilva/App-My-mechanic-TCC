@@ -22,6 +22,7 @@ if (isset($entrar)) {
 		$_SESSION["loggedin"] = true;
 		$_SESSION["username"] = $login;
 		$row = $result->fetch_assoc();
+		$_SESSION['usuario'] = $row;
 		$_SESSION["idUsuario"] = $row["idUsuario"];
         if($row["tipoUsuario"] == "prestadorDeServico")
 			header("Location:admPrestador.php");	
