@@ -12,12 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ano = isset($_POST['ano']) ? $_POST['ano'] : null;
     $placa = isset($_POST['placa']) ? $_POST['placa'] : null;
     $cor = isset($_POST['cor']) ? $_POST['cor'] : null;
-    $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
-    $entidadeId = isset($_POST['entidadeId']) ? $_POST['entidadeId'] : null;
+    // $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
+    // $entidadeId = isset($_POST['entidadeId']) ? $_POST['entidadeId'] : null;
 
-    if ($modelo && $ano && $placa && $cor && $tipoUsuario && $entidadeId) {
-        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, tipoUsuario, entidadeId) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sisssi", $modelo, $ano, $placa, $cor, $tipoUsuario, $entidadeId);
+    if ($modelo && $ano && $placa && $cor) {
+        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario) VALUES (?, ?, ?, ?,?)");
+        $stmt->bind_param("sissi", $modelo, $ano, $placa, $cor,$_SESSION["idUsuario"]);
+        
 
         if ($stmt->execute()) {
             $stmt->close();
@@ -76,25 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Cor:
                 <br>
                 <input class="form-control mt-3" type="text" id="cor" name="cor">
-            </label>
-        </div>
-
-        <div class="mb-5">
-            <label for="tipoUsuario">
-                Tipo de Usuário:
-                <br>
-                <select class="form-control mt-3" id="tipoUsuario" name="tipoUsuario">
-                    <option value="pessoaFisica">Pessoa Física</option>
-                    <option value="pessoaJuridica">Pessoa Jurídica</option>
-                </select>
-            </label>
-        </div>
-
-        <div class="mb-5">
-            <label for="entidadeId">
-                ID da Entidade:
-                <br>
-                <input class="form-control mt-3" type="number" id="entidadeId" name="entidadeId">
             </label>
         </div>
 
