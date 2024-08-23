@@ -4,7 +4,7 @@ session_start();
 $login = $_POST["Usuario"];
 $entrar = $_POST["entrar"];
 $senha = md5($_POST["senha"]);
-$conn = new mysqli("localhost","root","","my_mechanic",3306);
+$conn = new mysqli("localhost","root","","my_mechanic",3307);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }

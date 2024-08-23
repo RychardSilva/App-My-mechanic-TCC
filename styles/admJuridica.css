@@ -1,0 +1,93 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.header {
+    background-color: #000000;
+    color: white;
+    padding: 20px;
+    text-align: left;
+    position: relative;
+}
+
+/* Estiliza o ícone do perfil */
+#profile-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Container do perfil */
+.profile {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* Menu suspenso do perfil */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 50px; /* Ajuste conforme necessário */
+    right: 0;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    min-width: 160px;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu a {
+    color: #212529;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    background-color: #e9ecef;
+}
+
+.card-option {
+    margin: 15px;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-title {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.card .card-body {
+    padding: 15px;
+}
+
+.card.mt-4 img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card.mt-4 .card-body {
+    padding: 20px;
+}
