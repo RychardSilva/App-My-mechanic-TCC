@@ -2,43 +2,47 @@
 require("../../connect/connect.php");
 
 session_start();
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true) {
     header("location: login.html");
     exit;
 }
 
-$id_Usuario = isset($_POST['id_Usuario']) ? $_POST['id_Usuario'] : null;
-$nomeServico = isset($_POST['nomeServico']) ? $_POST['nomeServico'] : null;
-$descricao = isset($_POST['descricao']) ? $_POST['descricao'] : null;
-$id_Veiculo = isset($_POST['id_Veiculo']) ? $_POST['id_Veiculo'] : null;
+// Recupera o ID do usuário logado
+$id_Usuario = $_SESSION['idUsuario'];
 
-if ($nomeServico && $descricao && $id_Usuario && $id_Veiculo) {
-    // Verifica se o id_Veiculo existe na tabela veiculo
-    $stmt = $conn->prepare("SELECT idVeiculo FROM veiculo WHERE idVeiculo = ?");
-    $stmt->bind_param("i", $id_Veiculo);
-    $stmt->execute();
-    $stmt->store_result();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nomeServico = isset($_POST['nomeServico']) ? $_POST['nomeServico'] : null;
+    $descricao = isset($_POST['descricao']) ? $_POST['descricao'] : null;
+    $placa = isset($_POST['placa']) ? $_POST['placa'] : null;
 
-    if ($stmt->num_rows > 0) {
-        $stmt->close();
+    if ($nomeServico && $descricao && $placa) {
+        // Verifica se a placa existe na tabela veiculo e pertence ao usuário logado
+        $stmt = $conn->prepare("SELECT placa FROM veiculo WHERE placa = ? AND id_Usuario = ?");
+        $stmt->bind_param("si", $placa, $id_Usuario);
+        $stmt->execute();
+        $stmt->store_result();
 
-        // Insere o novo serviço
-        $stmt = $conn->prepare("INSERT INTO servico (idServico, id_Usuario, id_Veiculo, nome, descricao) VALUES (NULL, ?, ?, ?, ?)");
-        $stmt->bind_param("iiss", $id_Usuario, $id_Veiculo, $nomeServico, $descricao);
-
-        if ($stmt->execute()) {
+        if ($stmt->num_rows > 0) {
             $stmt->close();
-            $conn->close();
-            echo "<script language='javascript' type='text/javascript'>
-            alert('Serviço cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
+
+            // Insere o novo serviço usando a placa do veículo
+            $stmt = $conn->prepare("INSERT INTO servico (idServico, id_Usuario, placa_Veiculo, nome, descricao) VALUES (NULL, ?, ?, ?, ?)");
+            $stmt->bind_param("isss", $id_Usuario, $placa, $nomeServico, $descricao);
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                $conn->close();
+                echo "<script language='javascript' type='text/javascript'>
+                alert('Serviço cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
+            } else {
+                echo "Erro ao inserir dados do serviço: " . $stmt->error;
+            }
         } else {
-            echo "Erro ao inserir dados específicos: " . $stmt->error;
+            echo "Erro: Veículo não encontrado ou não pertence ao usuário.";
         }
     } else {
-        echo "Erro: Veículo não encontrado.";
+        echo "Erro: Todos os campos são obrigatórios.";
     }
-} else {
-    echo "Erro: Todos os campos são obrigatórios.";
 }
 ?>
 
@@ -73,18 +77,10 @@ if ($nomeServico && $descricao && $id_Usuario && $id_Veiculo) {
         </div>
 
         <div class="mb-5">
-            <label for="id_Usuario">
-                ID do Usuário:
+            <label for="placa">
+                Placa do Veículo:
                 <br>
-                <input class="form-control mt-3" type="text" id="id_Usuario" name="id_Usuario">
-            </label>
-        </div>
-
-        <div class="mb-5">
-            <label for="id_Veiculo">
-                ID do Veículo:
-                <br>
-                <input class="form-control mt-3" type="text" id="id_Veiculo" name="id_Veiculo">
+                <input class="form-control mt-3" type="text" id="placa" name="placa">
             </label>
         </div>
 
