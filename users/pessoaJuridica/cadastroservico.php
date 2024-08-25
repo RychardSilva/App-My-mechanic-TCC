@@ -13,9 +13,7 @@ $id_Usuario = $_SESSION['idUsuario'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomeServico = isset($_POST['nomeServico']) ? $_POST['nomeServico'] : null;
     $descricao = isset($_POST['descricao']) ? $_POST['descricao'] : null;
-
-
-    // Insere o novo serviço usando a placa do veículo
+    
     $stmt = $conn->prepare("INSERT INTO servico (idServico, id_Usuario, nome, descricao) VALUES (NULL, ?, ?, ?)");
     $stmt->bind_param("iss", $id_Usuario, $nomeServico, $descricao);
 
