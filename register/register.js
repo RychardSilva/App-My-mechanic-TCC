@@ -1,22 +1,29 @@
-document.getElementById('tipoUsuario').addEventListener('change', function() {
+document.addEventListener('DOMContentLoaded', function() {
+    var tipoUsuario = document.getElementById('tipoUsuario');
     var pessoaFisicaFields = document.getElementById('pessoaFisicaFields');
     var pessoaJuridicaFields = document.getElementById('pessoaJuridicaFields');
     var prestadorDeServicoFields = document.getElementById('prestadorDeServicoFields');
 
-    // Esconder todos os campos adicionais
-    pessoaFisicaFields.style.display = 'none';
-    pessoaJuridicaFields.style.display = 'none';
-    prestadorDeServicoFields.style.display = 'none';
+    function updateFields() {
+        pessoaFisicaFields.style.display = 'none';
+        pessoaJuridicaFields.style.display = 'none';
+        prestadorDeServicoFields.style.display = 'none';
 
-    // Mostrar campos adicionais conforme o tipo de usuário selecionado
-    if (this.value === 'PessoaFisica') {
-        pessoaFisicaFields.style.display = 'block';
-    } else if (this.value === 'PessoaJuridica') {
-        pessoaJuridicaFields.style.display = 'block';
-    } else if (this.value === 'PrestadorDeServico') {
-        prestadorDeServicoFields.style.display = 'block';
+        if (tipoUsuario.value === 'PessoaFisica') {
+            pessoaFisicaFields.style.display = 'block';
+        } else if (tipoUsuario.value === 'PessoaJuridica') {
+            pessoaJuridicaFields.style.display = 'block';
+        } else if (tipoUsuario.value === 'PrestadorDeServico') {
+            prestadorDeServicoFields.style.display = 'block';
+        }
     }
 
+    // Chama a função quando a página é carregada
+    updateFields();
+
+    // Chama a função quando o tipo de usuário é alterado
+    tipoUsuario.addEventListener('change', updateFields);
+
     // Log para depuração
-    console.log('Tipo de usuário selecionado:', this.value);
+    console.log('Tipo de usuário inicial:', tipoUsuario.value);
 });

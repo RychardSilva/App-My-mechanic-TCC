@@ -10,6 +10,8 @@ $numeroendereco = isset($_POST['numeroendereco']) ? $_POST['numeroendereco'] : n
 $complementoendereco = isset($_POST['complementoendereco']) ? $_POST['complementoendereco'] : null;
 $nomeCompleto = isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : null;
 $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
+$nomeCompletoP = isset($_POST['nomeCompletoP']) ? $_POST['nomeCompletoP'] : null;
+$cpfP = isset($_POST['cpfP']) ? $_POST['cpfP'] : null;
 
 // Aplicar hash MD5 à senha
 $registersenha = md5($registersenha);
@@ -73,7 +75,7 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
             }
         }elseif ($tipoUsuario == 'PrestadorDeServico') {
             $stmt = $conn->prepare("INSERT INTO prestadordeservico (id_Usuario, nomeCompleto, cpf) VALUES (?,?,?)");
-            $stmt->bind_param("iss", $userId, $nomeCompleto, $cpf);;
+            $stmt->bind_param("iss", $userId, $nomeCompletoP, $cpfP);;
                
             if ($stmt->execute()) {
                 $stmt->close();

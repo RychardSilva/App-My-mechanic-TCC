@@ -45,21 +45,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
             </div>
 
-            <div class="card mt-4">
-                <img src="" alt="Manutenção" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Vai viajar nessas férias?</h5>
-                    <p class="card-text">Verifique os níveis de óleo, água e pressão dos pneus de seu veículo. Evite
-                        imprevistos.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="../login/admPrestador.js"></script>
+    <script src="../login/selecionaPerfil.js"></script>
 </body>
 
 </html>

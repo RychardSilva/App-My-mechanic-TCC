@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
             $conn->close();
             echo "<script language='javascript' type='text/javascript'>
-            alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
+            alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admFisica.php';</script>";
         } else {
             echo "Erro ao inserir dados do veículo: " . $stmt->error;
         }
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Botão Voltar -->
     <div style="margin-top: 20px;">
-        <a href="../../login/admJuridica.php" class="btn btn-secondary">Voltar</a>
+        <a href="../../login/admFisica.php" class="btn btn-secondary">Voltar</a>
     </div>
 
     </form>
