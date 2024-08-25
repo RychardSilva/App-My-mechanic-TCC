@@ -32,8 +32,10 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
             $nomeCompleto = isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : null;
             $dataNasc = isset($_POST['dataNasc']) ? $_POST['dataNasc'] : null;
 
+            echo "CPF: $cpf, Nome: $nomeCompleto, Data de Nascimento: $dataNasc"; // Para depuração
+
             if ($cpf && $nomeCompleto && $dataNasc) {
-                $stmt = $conn->prepare("INSERT INTO pessoaFisica (id_Usuario, cpf, nomeCompleto, dataNasc) VALUES (?,?,?,?)");
+                $stmt = $conn->prepare("INSERT INTO pessoafisica (id_Usuario, cpf, nomeCompleto, dataNasc) VALUES (?,?,?,?)");
                 $stmt->bind_param("isss", $userId, $cpf, $nomeCompleto, $dataNasc);
 
                 if ($stmt->execute()) {

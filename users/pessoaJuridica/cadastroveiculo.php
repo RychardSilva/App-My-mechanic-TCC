@@ -11,9 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $modelo = isset($_POST['modelo']) ? $_POST['modelo'] : null;
     $ano = isset($_POST['ano']) ? $_POST['ano'] : null;
     $placa = isset($_POST['placa']) ? $_POST['placa'] : null;
-    $cor = isset($_POST['cor']) ? $_POST['cor'] : null;
-    // $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
-    // $entidadeId = isset($_POST['entidadeId']) ? $_POST['entidadeId'] : null;
+    $cor = isset($_POST['cor']) ? $_POST['cor'] : null;    
 
     if ($modelo && $ano && $placa && $cor) {
         $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario) VALUES (?, ?, ?, ?,?)");
@@ -83,6 +81,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="mb-5">
             <button type="submit">Enviar</button>
         </div>
+
+        
+    </table>
+
+    <!-- Botão Voltar -->
+    <div style="margin-top: 20px;">
+        <a href="../../login/admJuridica.php" class="btn btn-secondary">Voltar</a>
+    </div>
 
     </form>
 </body>

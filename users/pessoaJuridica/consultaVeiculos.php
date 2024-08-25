@@ -10,7 +10,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 require("../../connect/connect.php");
 // Preparar e executar a consulta
-$stmt = $conn->prepare("SELECT *FROM veiculo");
+$stmt = $conn->prepare("SELECT * FROM veiculo");
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -26,13 +26,10 @@ $result = $stmt->get_result();
     <h1>Lista de Veículos de <?php echo ($_SESSION["username"]); ?> </h1>
     <table border="1">
         <tr>
-            <!-- Substitua os nomes das colunas conforme necessário -->
-                       
             <th>Modelo</th>
             <th>Ano</th>
-            <th>Cor</th>
             <th>Placa</th>
-            <!-- Acrescente mais colunas conforme a estrutura da tabela -->
+            <th>Cor</th>
         </tr>
         <?php
         // Verificar se a consulta retornou resultados
@@ -40,20 +37,22 @@ $result = $stmt->get_result();
             // Exibir os dados de cada linha
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                
-               
                 echo "<td>" . $row["modelo"] . "</td>";
                 echo "<td>" . $row["ano"] . "</td>";                
                 echo "<td>" . $row["placa"] . "</td>";
                 echo "<td>" . $row["cor"] . "</td>";
-                // Adicione mais células conforme as colunas da tabela
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='6'>Nenhum veículo encontrado</td></tr>";
+            echo "<tr><td colspan='4'>Nenhum veículo encontrado</td></tr>";
         }
         ?>
     </table>
+
+    <!-- Botão Voltar -->
+    <div style="margin-top: 20px;">
+        <a href="../../login/admJuridica.php" class="btn btn-secondary">Voltar</a>
+    </div>
 </body>
 </html>
 
