@@ -8,6 +8,8 @@ $registersenha = isset($_POST['registersenha']) ? $_POST['registersenha'] : null
 $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
 $numeroendereco = isset($_POST['numeroendereco']) ? $_POST['numeroendereco'] : null;
 $complementoendereco = isset($_POST['complementoendereco']) ? $_POST['complementoendereco'] : null;
+$nomeCompleto = isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : null;
+$cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
 
 // Aplicar hash MD5 à senha
 $registersenha = md5($registersenha);
@@ -70,8 +72,8 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
                 echo "Erro: Todos os campos de Pessoa Jurídica são obrigatórios.";
             }
         }elseif ($tipoUsuario == 'PrestadorDeServico') {
-            $stmt = $conn->prepare("INSERT INTO prestadordeservico (id_Usuario) VALUES (?)");
-            $stmt->bind_param("i", $userId);
+            $stmt = $conn->prepare("INSERT INTO prestadordeservico (id_Usuario, nomeCompleto, cpf) VALUES (?,?,?)");
+            $stmt->bind_param("iss", $userId, $nomeCompleto, $cpf);;
                
             if ($stmt->execute()) {
                 $stmt->close();
