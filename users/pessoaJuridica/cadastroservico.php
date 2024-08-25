@@ -13,36 +13,23 @@ $id_Usuario = $_SESSION['idUsuario'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomeServico = isset($_POST['nomeServico']) ? $_POST['nomeServico'] : null;
     $descricao = isset($_POST['descricao']) ? $_POST['descricao'] : null;
-    $placa = isset($_POST['placa']) ? $_POST['placa'] : null;
 
-    if ($nomeServico && $descricao && $placa) {
-        // Verifica se a placa existe na tabela veiculo e pertence ao usuário logado
-        $stmt = $conn->prepare("SELECT placa FROM veiculo WHERE placa = ? AND id_Usuario = ?");
-        $stmt->bind_param("si", $placa, $id_Usuario);
-        $stmt->execute();
-        $stmt->store_result();
 
-        if ($stmt->num_rows > 0) {
-            $stmt->close();
+    // Insere o novo serviço usando a placa do veículo
+    $stmt = $conn->prepare("INSERT INTO servico (idServico, id_Usuario, nome, descricao) VALUES (NULL, ?, ?, ?)");
+    $stmt->bind_param("iss", $id_Usuario, $nomeServico, $descricao);
 
-            // Insere o novo serviço usando a placa do veículo
-            $stmt = $conn->prepare("INSERT INTO servico (idServico, id_Usuario, placa_Veiculo, nome, descricao) VALUES (NULL, ?, ?, ?, ?)");
-            $stmt->bind_param("isss", $id_Usuario, $placa, $nomeServico, $descricao);
-
-            if ($stmt->execute()) {
-                $stmt->close();
-                $conn->close();
-                echo "<script language='javascript' type='text/javascript'>
+    if ($stmt->execute()) {
+        $stmt->close();
+        $conn->close();
+        echo "<script language='javascript' type='text/javascript'>
                 alert('Serviço cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
-            } else {
-                echo "Erro ao inserir dados do serviço: " . $stmt->error;
-            }
-        } else {
-            echo "Erro: Veículo não encontrado ou não pertence ao usuário.";
-        }
     } else {
-        echo "Erro: Todos os campos são obrigatórios.";
+        echo "Erro ao inserir dados do serviço: " . $stmt->error;
     }
+
+} else {
+    echo "Erro: Todos os campos são obrigatórios.";
 }
 ?>
 
@@ -74,15 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br>
                 <input class="form-control mt-3" type="text" id="descricao" name="descricao">
             </label>
-        </div>
-
-        <div class="mb-5">
-            <label for="placa">
-                Placa do Veículo:
-                <br>
-                <input class="form-control mt-3" type="text" id="placa" name="placa">
-            </label>
-        </div>
+        </div>                            
 
         <div class="mb-5">
             <button type="submit">Enviar</button>
