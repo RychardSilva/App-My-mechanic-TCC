@@ -27,7 +27,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <a href="sair.php">Sair</a>
             </div>
         </div>
-        <h1>Bem-vindo, <?php echo htmlspecialchars($_SESSION["username"]); ?></h1>
+        <h1>Bem-vindo, <?php echo ($_SESSION["username"]); ?></h1>
         <p>Mantenha as manutenções do seus veículos em dia</p>
     </div>
 
@@ -104,6 +104,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <h5 class="card-title">Atualizar meus dados cadastrais</h5>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+         <div class="card mt-4">
+            <img src="" alt="Manutenção" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Vai viajar nessas férias?</h5>
+                <p class="card-text">Verifique os níveis de óleo, água e pressão dos pneus de seu veículo. Evite
+                    imprevistos.</p>
             </div>
         </div>
     </div>

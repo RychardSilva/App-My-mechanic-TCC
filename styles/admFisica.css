@@ -13,7 +13,6 @@ body {
     position: relative;
 }
 
-/* Estiliza o ícone do perfil */
 #profile-icon {
     border-radius: 50%;
     width: 40px;
@@ -22,18 +21,16 @@ body {
     cursor: pointer;
 }
 
-/* Container do perfil */
 .profile {
     position: absolute;
     top: 20px;
     right: 20px;
 }
 
-/* Menu suspenso do perfil */
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 50px; /* Ajuste conforme necessário */
+    top: 50px;
     right: 0;
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
@@ -68,11 +65,10 @@ body {
     margin: 0 -15px;
 }
 
-.column {
-    flex: 1;
-    max-width: 25%;
+.col-md-3 {
+    flex: 1 0 21%;
+    max-width: 21%;
     padding: 15px;
-    box-sizing: border-box;
 }
 
 .card {
@@ -106,4 +102,11 @@ body {
 
 .mt-4 {
     margin-top: 1.5rem;
+}
+
+@media (max-width: 767.98px) {
+    .col-md-3 {
+        flex: 1 0 100%;
+        max-width: 100%;
+    }
 }

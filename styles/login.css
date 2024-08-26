@@ -6,13 +6,13 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding: 0 20px; /* Espaçamento para telas menores */
 }
 
 .logo {
@@ -20,20 +20,20 @@ body {
 }
 
 .logo img {
-    max-width: 350px;
+    max-width: 100%;
+    height: auto;
+    max-width: 350px; /* Ajuste máximo para a logo */
 }
-
 
 .form-container {
     background: #fff;
     padding: 40px;
-    padding-right: 65px;
     border-radius: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
 }
-
 
 .form {
     display: flex;
@@ -55,12 +55,12 @@ body {
 }
 
 .form-group input {
-    width: 100%;
+    width: 100%; /* Ajuste para que os inputs ocupem toda a largura do contêiner */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
 }
-
 
 button {
     padding: 10px;
@@ -77,7 +77,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-
 p {
     text-align: center;
     margin-top: 15px;
@@ -90,4 +89,29 @@ p a {
 
 p a:hover {
     text-decoration: underline;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+    
+    .logo img {
+        max-width: 250px; /* Ajuste máximo para telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 15px;
+    }
+    
+    .logo img {
+        max-width: 200px; /* Ajuste máximo para telas muito pequenas */
+    }
+    
+    button {
+        font-size: 14px; /* Ajuste do tamanho da fonte em telas pequenas */
+    }
 }
