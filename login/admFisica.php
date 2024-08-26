@@ -22,7 +22,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body>
     <div class="header">
         <div class="profile" id="profile-container">
-            <img src="https://via.placeholder.com/40" alt="Perfil" id="profile-icon">
+            <img src="../imgs/userProfile.png" alt="Perfil" id="profile-icon">
             <div class="dropdown-menu">
                 <a href="sair.php">Sair</a>
             </div>
@@ -37,7 +37,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/cadastroveiculo.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Cadastre seu Veículo" class="card-img-top">
+                        <img src="../imgs/registrocarro.png" alt="Cadastre seu Veículo" class="card-img-top">
                         <h5 class="card-title">Cadastre seu Veículo</h5>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/consultarveiculo.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Consultar Veículos cadastrados" class="card-img-top">
+                        <img src="../imgs/consultcar.png" alt="Consultar Veículos cadastrados" class="card-img-top">
                         <h5 class="card-title">Consultar Veículos cadastrados</h5>
                     </div>
                 </div>
@@ -55,7 +55,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/agendarservico.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Agendar Serviço" class="card-img-top">
+                        <img src="../imgs/schedule.png" alt="Agendar Serviço" class="card-img-top">
                         <h5 class="card-title">Agendar Serviço</h5>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/solicitarorcamento.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Solicitar Orçamento" class="card-img-top">
+                        <img src="../imgs/quote-request.png" alt="Solicitar Orçamento" class="card-img-top">
                         <h5 class="card-title">Solicitar Orçamento</h5>
                     </div>
                 </div>

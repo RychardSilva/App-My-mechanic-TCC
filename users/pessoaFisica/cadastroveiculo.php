@@ -11,20 +11,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $modelo = isset($_POST['modelo']) ? $_POST['modelo'] : null;
     $ano = isset($_POST['ano']) ? $_POST['ano'] : null;
     $placa = isset($_POST['placa']) ? $_POST['placa'] : null;
-    $cor = isset($_POST['cor']) ? $_POST['cor'] : null;
-    // $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
-    // $entidadeId = isset($_POST['entidadeId']) ? $_POST['entidadeId'] : null;
+    $cor = isset($_POST['cor']) ? $_POST['cor'] : null;    
 
     if ($modelo && $ano && $placa && $cor) {
-        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario) VALUES (?, ?, ?, ?,?)");
-        $stmt->bind_param("sissi", $modelo, $ano, $placa, $cor,$_SESSION["idUsuario"]);
-        
+        $idUsuario = $_SESSION["idUsuario"];
+        $nomeCompleto = null;
+        $nomeSocial = null;
+
+        // Verifica se o usuário é pessoa física
+        $stmt = $conn->prepare("SELECT nomeCompleto FROM pessoafisica WHERE id_Usuario = ?");
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+        $stmt->bind_result($nomeCompleto);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Se não for pessoa física, verifica se é pessoa jurídica
+        if (!$nomeCompleto) {
+            $stmt = $conn->prepare("SELECT nomeSocial FROM pessoajuridica WHERE id_Usuario = ?");
+            $stmt->bind_param("i", $idUsuario);
+            $stmt->execute();
+            $stmt->bind_result($nomeSocial);
+            $stmt->fetch();
+            $stmt->close();
+        }
+
+        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);
 
         if ($stmt->execute()) {
             $stmt->close();
             $conn->close();
             echo "<script language='javascript' type='text/javascript'>
-            alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admFisica.php';</script>";
+            alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
         } else {
             echo "Erro ao inserir dados do veículo: " . $stmt->error;
         }

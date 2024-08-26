@@ -14,9 +14,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cor = isset($_POST['cor']) ? $_POST['cor'] : null;    
 
     if ($modelo && $ano && $placa && $cor) {
-        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario) VALUES (?, ?, ?, ?,?)");
-        $stmt->bind_param("sissi", $modelo, $ano, $placa, $cor,$_SESSION["idUsuario"]);
-        
+        $idUsuario = $_SESSION["idUsuario"];
+        $nomeCompleto = null;
+        $nomeSocial = null;
+
+        // Verifica se o usuário é pessoa física
+        $stmt = $conn->prepare("SELECT nomeCompleto FROM pessoafisica WHERE id_Usuario = ?");
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+        $stmt->bind_result($nomeCompleto);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Se não for pessoa física, verifica se é pessoa jurídica
+        if (!$nomeCompleto) {
+            $stmt = $conn->prepare("SELECT nomeSocial FROM pessoajuridica WHERE id_Usuario = ?");
+            $stmt->bind_param("i", $idUsuario);
+            $stmt->execute();
+            $stmt->bind_result($nomeSocial);
+            $stmt->fetch();
+            $stmt->close();
+        }
+
+        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);
 
         if ($stmt->execute()) {
             $stmt->close();
