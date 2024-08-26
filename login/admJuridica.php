@@ -6,6 +6,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.html");
     exit;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -23,9 +25,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="header">
         <div class="profile" id="profile-container">
             <img src="https://via.placeholder.com/40" alt="Perfil" id="profile-icon">
-            <div class="dropdown-menu">
-                <a href="sair.php">Sair</a>
-            </div>
+            <ul class="dropdown-menu" aria-labelledby="profile-icon">
+                <li><a class="dropdown-item" href="../users/pessoaJuridica/perfil.php">Meus Dados</a></li>
+                <li><a class="dropdown-item" href="sair.php">Sair</a></li>
+            </ul>
         </div>
         <h1>Olá, <?php echo ($_SESSION["username"]); ?></h1>
         <p>Gerencie seus Serviços</p>
@@ -55,8 +58,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaJuridica/consultaVeiculos.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Consultar Veículos Cadastrados"
-                            class="card-img-top">
+                        <img src="https://via.placeholder.com/150" alt="Consultar Veículos Cadastrados" class="card-img-top">
                         <h5 class="card-title">Consultar Veículos Cadastrados</h5>
                     </div>
                 </div>
@@ -76,8 +78,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <img src="" alt="Manutenção" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Vai viajar nessas férias?</h5>
-                <p class="card-text">Verifique os níveis de óleo, água e pressão dos pneus de seu veículo. Evite
-                    imprevistos.</p>
+                <p class="card-text">Verifique os níveis de óleo, água e pressão dos pneus de seu veículo. Evite imprevistos.</p>
             </div>
         </div>
     </div>
