@@ -32,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -64,11 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </label>
         </div>
 
-        <div>
+        <div class="button-group">
             <button type="submit">Enviar</button>
-        </div>
-        
-        <div class="button-container">
             <a href="../../login/admPrestador.php" class="btn-secondary">Voltar</a>
         </div>
     </form>

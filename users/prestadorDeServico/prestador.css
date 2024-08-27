@@ -19,8 +19,8 @@ p {
     text-align: center;
     font-size: 16px;
     color: #666;
-    margin: 0 auto 20px auto; /* Margem superior ajustada para 0 e inferior para 20px */
-    max-width: 600px; /* Limita a largura do parágrafo para um tamanho apropriado */
+    margin: 0 auto 20px auto;
+    max-width: 600px;
 }
 
 /* Estilizando o formulário */
@@ -50,43 +50,122 @@ input[type="text"] {
     box-sizing: border-box;
 }
 
-/* Estilizando o botão de envio */
-button[type="submit"] {
+/* Estilizando o grupo de botões */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Estilizando os botões de envio e cancelamento */
+button[type="submit"], a.btn-secondary {
     background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 12px;
+    padding: 12px 20px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    width: 100%;
     transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* Estilizando o botão "Voltar" */
-a.btn-secondary {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 20px;
-    background-color: #6c757d;
-    color: #fff;
+    text-decoration: none; /* Remover sublinhado do link */
     text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    display: inline-block;
+    width: 48%; /* Ajusta a largura dos botões para caber lado a lado */
+}
+
+/* Adicionando espaço entre os botões */
+.button-group button[type="submit"] {
+    margin-right: 4%; /* Espaço à direita do botão Enviar */
+}
+
+a.btn-secondary {
+    background-color: #6c757d;
+}
+
+button[type="submit"]:hover, a.btn-secondary:hover {
+    background-color: #0056b3;
 }
 
 a.btn-secondary:hover {
     background-color: #5a6268;
 }
 
-/* Centralizando o botão "Voltar" */
+/* Centralizando o botão "Voltar" (não mais necessário já que está dentro do .button-group) */
 div.button-container {
     text-align: center;
     margin-top: 20px;
+}
+
+/* Estilizando a tabela */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Estilizando o botão "Editar" */
+button.btn-edit {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+/* Estilizando o botão "Excluir" */
+button.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Estilizando o formulário de edição */
+#edit-form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
 }

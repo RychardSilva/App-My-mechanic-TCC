@@ -32,13 +32,23 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </div>
 
     <div class="container-fluid">
-        <div class="row text-center">
-            <div class="col-md-3">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-3 d-flex justify-content-center"> <!-- Adicione 'd-flex' e 'justify-content-center' -->
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/prestadorDeServico/cadastroservico.php" class="stretched-link"></a>
                         <img src="../imgs/logging.png" alt="Cadastro de Serviços" class="card-img-top">
                         <h5 class="card-title">Cadastro de Serviços</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 d-flex justify-content-center"> <!-- Adicione 'd-flex' e 'justify-content-center' -->
+                <div class="card card-option">
+                    <div class="card-body">
+                        <a href="../users/prestadorDeServico/consultarservico.php" class="stretched-link"></a>
+                        <img src="../imgs/school.png" alt="Consulta de Serviços" class="card-img-top">
+                        <h5 class="card-title">Consultar meus Serviços</h5>
                     </div>
                 </div>
             </div>
