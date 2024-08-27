@@ -18,14 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nomeCompleto = null;
         $nomeSocial = null;
 
-        // Verifica se o usuário é pessoa física
-        $stmt = $conn->prepare("SELECT nomeCompleto FROM pessoafisica WHERE id_Usuario = ?");
-        $stmt->bind_param("i", $idUsuario);
-        $stmt->execute();
-        $stmt->bind_result($nomeCompleto);
-        $stmt->fetch();
-        $stmt->close();
-
         // Se não for pessoa física, verifica se é pessoa jurídica
         if (!$nomeCompleto) {
             $stmt = $conn->prepare("SELECT nomeSocial FROM pessoajuridica WHERE id_Usuario = ?");

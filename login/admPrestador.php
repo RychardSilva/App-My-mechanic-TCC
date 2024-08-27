@@ -22,7 +22,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body>
     <div class="header">
         <div class="profile" id="profile-container">
-            <img src="https://via.placeholder.com/40" alt="Perfil" id="profile-icon">
+            <img src="../imgs/userProfile.png" alt="Perfil" id="profile-icon">
             <div class="dropdown-menu">
                 <a href="sair.php">Sair</a>
             </div>
@@ -37,7 +37,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/prestadorDeServico/cadastroservico.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Cadastro de Serviços" class="card-img-top">
+                        <img src="../imgs/logging.png" alt="Cadastro de Serviços" class="card-img-top">
                         <h5 class="card-title">Cadastro de Serviços</h5>
                     </div>
                 </div>

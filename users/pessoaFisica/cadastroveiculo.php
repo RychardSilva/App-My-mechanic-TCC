@@ -26,26 +26,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
         $stmt->close();
 
-        // Se não for pessoa física, verifica se é pessoa jurídica
-        if (!$nomeCompleto) {
-            $stmt = $conn->prepare("SELECT nomeSocial FROM pessoajuridica WHERE id_Usuario = ?");
-            $stmt->bind_param("i", $idUsuario);
-            $stmt->execute();
-            $stmt->bind_result($nomeSocial);
-            $stmt->fetch();
-            $stmt->close();
-        }
+        // Verifica se a placa já existe
+        $stmt = $conn->prepare("SELECT idVeiculo FROM veiculo WHERE placa = ?");
+        $stmt->bind_param("s", $placa);
+        $stmt->execute();
+        $stmt->store_result();
 
-        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);
-
-        if ($stmt->execute()) {
+        if ($stmt->num_rows > 0) {
+            echo "Erro: A placa já está cadastrada.";
             $stmt->close();
-            $conn->close();
-            echo "<script language='javascript' type='text/javascript'>
-            alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
         } else {
-            echo "Erro ao inserir dados do veículo: " . $stmt->error;
+            $stmt->close();
+
+            $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                $conn->close();
+                echo "<script language='javascript' type='text/javascript'>
+                alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admFisica.php';</script>";
+            } else {
+                echo "Erro ao inserir dados do veículo: " . $stmt->error;
+                $stmt->close();
+                $conn->close();
+            }
         }
     } else {
         echo "Erro: Todos os campos são obrigatórios.";
