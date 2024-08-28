@@ -25,16 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($nomeCompleto);
         $stmt->fetch();
         $stmt->close();
-
-        // Se não for pessoa física, verifica se é pessoa jurídica
-        if (!$nomeCompleto) {
-            $stmt = $conn->prepare("SELECT nomeSocial FROM pessoajuridica WHERE id_Usuario = ?");
-            $stmt->bind_param("i", $idUsuario);
-            $stmt->execute();
-            $stmt->bind_result($nomeSocial);
-            $stmt->fetch();
-            $stmt->close();
-        }
+       
 
         $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);

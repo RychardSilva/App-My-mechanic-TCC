@@ -9,7 +9,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 require("../../connect/connect.php");
-
 // Preparar e executar a consulta
 $stmt = $conn->prepare("SELECT * FROM veiculo WHERE id_Usuario = ?");
 $stmt->bind_param("i", $_SESSION["idUsuario"]);
@@ -25,7 +24,7 @@ $result = $stmt->get_result();
     <title>Lista de Veículos</title>
 </head>
 <body>
-    <h1>Lista de Veículos de <?php echo htmlspecialchars($_SESSION["username"]); ?> </h1>
+    <h1>Lista de Veículos de <?php echo ($_SESSION["username"]); ?> </h1>
     <table border="1">
         <tr>
             <th>Modelo</th>
@@ -39,10 +38,10 @@ $result = $stmt->get_result();
             // Exibir os dados de cada linha
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . htmlspecialchars($row["modelo"]) . "</td>";
-                echo "<td>" . htmlspecialchars($row["ano"]) . "</td>";
-                echo "<td>" . htmlspecialchars($row["placa"]) . "</td>";
-                echo "<td>" . htmlspecialchars($row["cor"]) . "</td>";
+                echo "<td>" . $row["modelo"] . "</td>";
+                echo "<td>" . $row["ano"] . "</td>";                
+                echo "<td>" . $row["placa"] . "</td>";
+                echo "<td>" . $row["cor"] . "</td>";
                 echo "</tr>";
             }
         } else {
@@ -53,7 +52,7 @@ $result = $stmt->get_result();
 
     <!-- Botão Voltar -->
     <div style="margin-top: 20px;">
-        <a href="../../login/admJuridica.php" class="btn btn-secondary">Voltar</a>
+        <a href="../../login/admFisica.php" class="btn btn-secondary">Voltar</a>
     </div>
 </body>
 </html>
