@@ -25,18 +25,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($nomeCompleto);
         $stmt->fetch();
         $stmt->close();
+<<<<<<< HEAD
        
+=======
 
-        $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);
+        // Verifica se a placa já existe
+        $stmt = $conn->prepare("SELECT idVeiculo FROM veiculo WHERE placa = ?");
+        $stmt->bind_param("s", $placa);
+        $stmt->execute();
+        $stmt->store_result();
+>>>>>>> ec6632f0d41c33c4ba95647d8a1f3a537eff9b66
 
-        if ($stmt->execute()) {
+        if ($stmt->num_rows > 0) {
+            echo "Erro: A placa já está cadastrada.";
             $stmt->close();
-            $conn->close();
-            echo "<script language='javascript' type='text/javascript'>
-            alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admJuridica.php';</script>";
         } else {
-            echo "Erro ao inserir dados do veículo: " . $stmt->error;
+            $stmt->close();
+
+            $stmt = $conn->prepare("INSERT INTO veiculo (modelo, ano, placa, cor, id_Usuario, nome_Completo, nome_Social) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sississ", $modelo, $ano, $placa, $cor, $idUsuario, $nomeCompleto, $nomeSocial);
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                $conn->close();
+                echo "<script language='javascript' type='text/javascript'>
+                alert('Veículo cadastrado com sucesso!');window.location.href='../../login/admFisica.php';</script>";
+            } else {
+                echo "Erro ao inserir dados do veículo: " . $stmt->error;
+                $stmt->close();
+                $conn->close();
+            }
         }
     } else {
         echo "Erro: Todos os campos são obrigatórios.";

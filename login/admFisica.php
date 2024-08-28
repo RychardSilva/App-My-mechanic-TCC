@@ -46,7 +46,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/consultarveiculo.php" class="stretched-link"></a>
-                        <img src="../imgs/consultcar.png" alt="Consultar Veículos cadastrados" class="card-img-top">
+                        <img src="../imgs/find-car.png" alt="Consultar Veículos cadastrados" class="card-img-top">
                         <h5 class="card-title">Consultar Veículos cadastrados</h5>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/consultarservicos.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Consultar Serviços das Oficinas/Prestadores" class="card-img-top">
+                        <img src="../imgs/product.png" alt="Consultar Serviços das Oficinas/Prestadores" class="card-img-top">
                         <h5 class="card-title">Consultar Serviços das Oficinas/Prestadores</h5>
                     </div>
                 </div>
@@ -81,8 +81,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <div class="col-md-3">
                 <div class="card card-option">
                     <div class="card-body">
+<<<<<<< HEAD
                         <a href="../users/pessoaFisica/consultaroficinas.php" class="stretched-link"></a>
                         <img src="https://via.placeholder.com/150" alt="Consultar Oficinas/Prestadores Cadastrados" class="card-img-top">
+=======
+                        <a href="../users/pessoaFisica/cconsultaroficinas.php" class="stretched-link"></a>
+                        <img src="../imgs/school.png" alt="Consultar Oficinas/Prestadores Cadastrados" class="card-img-top">
+>>>>>>> ec6632f0d41c33c4ba95647d8a1f3a537eff9b66
                         <h5 class="card-title">Consultar Oficinas/Prestadores Cadastrados</h5>
                     </div>
                 </div>
@@ -91,7 +96,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/obterdiagnostico.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Obter Diagnóstico" class="card-img-top">
+                        <img src="../imgs/identify.png" alt="Obter Diagnóstico" class="card-img-top">
                         <h5 class="card-title">Obter Diagnóstico</h5>
                     </div>
                 </div>
@@ -100,23 +105,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/atualizarOficina.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Atualizar meus dados cadastrais" class="card-img-top">
+                        <img src="../imgs/data-processing.png" alt="Atualizar meus dados cadastrais" class="card-img-top">
                         <h5 class="card-title">Atualizar meus dados cadastrais</h5>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-         <div class="card mt-4">
-            <img src="" alt="Manutenção" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Vai viajar nessas férias?</h5>
-                <p class="card-text">Verifique os níveis de óleo, água e pressão dos pneus de seu veículo. Evite
-                    imprevistos.</p>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

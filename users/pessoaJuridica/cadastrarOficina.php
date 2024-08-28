@@ -67,6 +67,7 @@ if ($hor_funcionamentoInic && $hor_funcionamentoFech && $telefone && $nomeSocial
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro dados Oficina</title>
+    <link rel="stylesheet" href="./pessoajuridica.css">
 </head>
 <body>
     <h1 class="m-0">Entre com os dados da Oficina</h1>

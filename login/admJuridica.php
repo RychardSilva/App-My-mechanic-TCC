@@ -24,7 +24,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body>
     <div class="header">
         <div class="profile" id="profile-container">
-            <img src="https://via.placeholder.com/40" alt="Perfil" id="profile-icon">
+            <img src="../imgs/userProfile.png" alt="Perfil" id="profile-icon">
             <ul class="dropdown-menu" aria-labelledby="profile-icon">
                 <li><a class="dropdown-item" href="../users/pessoaJuridica/perfil.php">Meus Dados</a></li>
                 <li><a class="dropdown-item" href="sair.php">Sair</a></li>
@@ -40,7 +40,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaJuridica/cadastroservico.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Cadastro de Serviços" class="card-img-top">
+                        <img src="../imgs/logging.png" alt="Cadastro de Serviços" class="card-img-top">
                         <h5 class="card-title">Cadastro de Serviços</h5>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaJuridica/cadastrarOficina.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Cadastrar Oficina" class="card-img-top">
+                        <img src="../imgs/registration.png" alt="Cadastrar Oficina" class="card-img-top">
                         <h5 class="card-title">Cadastrar Oficina</h5>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaJuridica/consultaVeiculos.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Consultar Veículos Cadastrados" class="card-img-top">
+                        <img src="../imgs/find-car.png" alt="Consultar Veículos Cadastrados" class="card-img-top">
                         <h5 class="card-title">Consultar Veículos Cadastrados</h5>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaJuridica/cadastroveiculo.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Cadastre seus Veículos" class="card-img-top">
+                        <img src="../imgs/registrocarro.png" alt="Cadastre seus Veículos" class="card-img-top">
                         <h5 class="card-title">Cadastre seus Veículos</h5>
                     </div>
                 </div>

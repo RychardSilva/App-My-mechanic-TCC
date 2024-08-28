@@ -32,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -40,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Serviço</title>
+    <link rel="stylesheet" href="./prestador.css">
 </head>
 
 <body>
@@ -61,11 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br>
                 <input type="text" id="descricao" name="descricao" required>
             </label>
-        </div>                            
+        </div>
 
-        <div>
+        <div class="button-group">
             <button type="submit">Enviar</button>
-            <a href="../../login/admPrestador.php">Voltar</a>
+            <a href="../../login/admPrestador.php" class="btn-secondary">Voltar</a>
         </div>
     </form>
 </body>
