@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_Servico = $stmt->insert_id;
 
         // Insere os dados na tabela 'oficinaservicos'
-        $stmt = $conn->prepare("INSERT INTO oficinaservicos (preco, tempoDuracao, id_Servico, id_Oficina) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO oficinaservicos (preco, tempoDuracao, idServico, id_Oficina) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("dsii", $preco, $tempoDuracao, $id_Servico, $idOficina);
 
         if (!$stmt->execute()) {

@@ -81,13 +81,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <div class="col-md-3">
                 <div class="card card-option">
                     <div class="card-body">
-<<<<<<< HEAD
                         <a href="../users/pessoaFisica/consultaroficinas.php" class="stretched-link"></a>
                         <img src="https://via.placeholder.com/150" alt="Consultar Oficinas/Prestadores Cadastrados" class="card-img-top">
-=======
-                        <a href="../users/pessoaFisica/cconsultaroficinas.php" class="stretched-link"></a>
-                        <img src="../imgs/school.png" alt="Consultar Oficinas/Prestadores Cadastrados" class="card-img-top">
->>>>>>> ec6632f0d41c33c4ba95647d8a1f3a537eff9b66
                         <h5 class="card-title">Consultar Oficinas/Prestadores Cadastrados</h5>
                     </div>
                 </div>

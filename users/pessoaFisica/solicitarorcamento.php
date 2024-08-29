@@ -9,7 +9,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 require("../../connect/connect.php");
 
-$idUsuario = $_SESSION['idUsuario']; // Assumindo que o ID do usuário está armazenado na sessão
+$idUsuario = $_SESSION['idUsuario'];
 
 // Obter as cidades únicas do banco de dados
 $cidades = [];
@@ -37,75 +37,20 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 
+$valorTotalOrcamento = 0; // Valor padrão
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $tituloOrcamento = $_POST['tituloOrcamento'];
+    $dataOrcamento = $_POST['dataOrcamento'];
+    $validadeOrcamento = $_POST['validadeOrcamento'];
     $idServico = $_POST['idServico'];
-    $dataInici = $_POST['data'];
-    $horario = $_POST['horario'];
-    $placa = $_POST['placa'];
 
-    // Obter id_Oficina do serviço selecionado
-    $sql = "SELECT id_Oficina FROM oficinaservicos WHERE idServico = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $idServico);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Implementação da lógica para salvar o orçamento e calcular o valor total do orçamento...
+    // Exemplo fictício de cálculo do valor total:
+    $valorTotalOrcamento = 1000; // Valor fictício
 
-    
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $id_Oficina = $row['id_Oficina'];        
-        // Inserir na tabela agendamentoservicooficina
-        $sql1 = "INSERT INTO agendamentoservicooficina (id_Servico, dataInici, id_Oficina) VALUES (?, ?, ?)";
-        $stmt1 = $conn->prepare($sql1);
-        $stmt1->bind_param("isi", $idServico, $dataInici, $id_Oficina);
-
-        if ($stmt1->execute()) {
-            // Obter o id_AgendamentoServicoOficina inserido
-            $idAgendamentoServicoOficina = $stmt1->insert_id;
-
-            // Obter o id_Veiculo com base na placa e idUsuario
-            $sql2 = "SELECT idVeiculo FROM veiculo WHERE placa = ? AND id_Usuario = ?";
-            $stmt2 = $conn->prepare($sql2);
-            $stmt2->bind_param("si", $placa, $idUsuario);
-            $stmt2->execute();
-            $result = $stmt2->get_result();
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $idVeiculo = $row['idVeiculo'];
-
-                // Inserir na tabela agendamento
-                $sql3 = "INSERT INTO agendamento (hora, dataAgen, id_Usuario, id_Veiculo, id_AgendamentoOficina) 
-                         VALUES (?, ?, ?, ?, ?)";
-                $stmt3 = $conn->prepare($sql3);
-                $stmt3->bind_param("ssiii", $horario, $dataInici, $idUsuario, $idVeiculo, $idAgendamentoServicoOficina);
-
-                if ($stmt3->execute()) {
-                    echo "Agendamento realizado com sucesso!";
-                } else {
-                    echo "Erro ao agendar: " . $stmt3->error;
-                }
-
-                $stmt3->close();
-            } else {
-                echo "Veículo não encontrado.";
-            }
-
-            $stmt2->close();
-        } else {
-            echo "Erro ao agendar o serviço na oficina: " . $stmt1->error;
-        }
-
-        $stmt1->close();
-    } else {
-        echo "Oficina não encontrada para o serviço selecionado.";
-    }
-
-    $stmt->close();
+    echo "<script>document.getElementById('valorTotalOrcamento').value = " . $valorTotalOrcamento . ";</script>";
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
 
         form {
             width: 40%;
@@ -158,8 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .form-group input[type="text"],
         .form-group input[type="date"],
-        .form-group input[type="time"],
-        .form-group textarea {
+        .form-group input[type="number"],
+        .form-group input[type="submit"] {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -167,16 +111,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-sizing: border-box;
         }
 
-        .form-group textarea {
-            resize: vertical;
-        }
-
         .form-group input[type="submit"] {
             background-color: #4CAF50;
             color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
         }
@@ -185,18 +122,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #45a049;
         }
 
-        form {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px; /* Adiciona espaço à direita do formulário */
-}
+        .planilha {
+            width: 70%;
+            margin-left: 20px;
+        }
 
-.planilha {
-    width: 70%; /* Tamanho da tabela */
-    margin-left: 20px; /* Adiciona espaço à esquerda da tabela */
-}
-
+        .valor-total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
 
         .back-button {
             text-align: center;
@@ -211,10 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .back-button a:hover {
             text-decoration: underline;
-        }
-
-        .planilha {
-            width: 70%; /* Tamanho da tabela aumentado */
         }
 
         table {
@@ -257,40 +189,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     
-    <h2>Agendamento de Serviços</h2>
+    <h2>Orçamento de Serviços</h2>
     
     <div class="container">
-    <form method="post" class="mt-5">
+        <form method="post">  
+            
+            <div class="form-group">
+                <label for="dataOrcamento">Data do Orçamento:</label>
+                <input type="date" id="dataOrcamento" name="dataOrcamento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="validadeOrcamento">Validade do Orçamento:</label>
+                <input type="date" id="validadeOrcamento" name="validadeOrcamento" required>
+            </div>
+
             <div class="form-group">
                 <label for="idServico">Id Serviço:</label>
                 <input type="number" id="idServico" name="idServico" required>
-            </div>           
-            
+            </div>
 
             <div class="form-group">
-                <label for="placa">Placa:</label>
-                <select id="placa" name="placa" required>
-                    <option value="">Selecione uma Placa</option>
-                    <?php
-                    foreach ($placas as $placa) {
-                        echo "<option value='$placa'>$placa</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="data">Data:</label>
-                <input type="date" id="data" name="data" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="horario">Horário:</label>
-                <input type="time" id="horario" name="horario" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Agendar">
+                <input type="submit" value="Salvar Orçamento">
             </div>
         </form>
 
@@ -317,16 +237,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Nome do Serviço</th>
                         <th>Descrição do Serviço</th>
                         <th>Cidade</th>
+                        <th>Valor(R$)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $selectedCity = isset($_GET['cidade']) ? $_GET['cidade'] : '';
 
-                    $query = "SELECT servico.idServico, pessoajuridica.nomeSocial, servico.nome, servico.descricao, endereco.cidade
+                    $query = "SELECT servico.idServico, pessoajuridica.nomeSocial, servico.nome, servico.descricao, endereco.cidade,oficinaservicos.preco
                               FROM servico 
                               JOIN pessoajuridica ON servico.id_Usuario = pessoajuridica.id_Usuario
-                              JOIN endereco ON endereco.id_Usuario = servico.id_Usuario";
+                              JOIN endereco ON endereco.id_Usuario = servico.id_Usuario
+                              LEFT JOIN oficinaservicos ON servico.idServico = oficinaservicos.idServico";
+    
 
                     if (!empty($selectedCity)) {
                         $query .= " WHERE endereco.cidade = '$selectedCity'";
@@ -341,7 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "<td>" . $row["nomeSocial"] . "</td>";                            
                             echo "<td>" . $row["nome"] . "</td>";
                             echo "<td>" . $row["descricao"] . "</td>";
-                            echo "<td>" . $row["cidade"] . "</td>";
+                            echo "<td>" . $row["cidade"] . "</td>";                            
                             echo "</tr>";
                         }
                     } else {
@@ -350,6 +273,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </tbody>
             </table>
+
+            <!-- Nova planilha para orçamentos -->
+            <div class="valor-total">
+                <h3>Resumo do Orçamento</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id Orçamento</th>
+                            <th>Valor Total do Orçamento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td> <!-- Substitua pelo idOrcamento real se disponível -->
+                            <td id="valorTotalOrcamento">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>   
 
@@ -363,11 +305,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             window.location.href = "?cidade=" + cidade;
         }
     </script>
-
-
-
-
-
-
-
-
+</body>
+</html>
