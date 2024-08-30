@@ -8,6 +8,7 @@ $registersenha = isset($_POST['registersenha']) ? $_POST['registersenha'] : null
 $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null;
 $numeroendereco = isset($_POST['numeroendereco']) ? $_POST['numeroendereco'] : null;
 $complementoendereco = isset($_POST['complementoendereco']) ? $_POST['complementoendereco'] : null;
+$cidade = isset($_POST['cidade']) ? $_POST['cidade'] : null;
 $nomeCompleto = isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : null;
 $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
 $nomeCompletoP = isset($_POST['nomeCompletoP']) ? $_POST['nomeCompletoP'] : null;
@@ -40,6 +41,13 @@ if ($registerusername && $registertelephone && $registeremail && $registersenha 
     if ($stmt->execute()) {
         $stmt->close();
         $userId = $conn->insert_id; // Obtém o ID do usuário recém-inserido
+
+         // Inserir na tabela endereco
+         $stmt = $conn->prepare("INSERT INTO endereco (id_Usuario, cidade, numero, complemento) VALUES (?,?,?,?)");
+         $stmt->bind_param("isss", $userId, $cidade, $numeroendereco, $complementoendereco);
+         $stmt->execute();
+         $stmt->close();
+ 
 
         if ($tipoUsuario == 'PessoaFisica') {
             $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;

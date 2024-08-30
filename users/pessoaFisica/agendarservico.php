@@ -13,7 +13,7 @@ $idUsuario = $_SESSION['idUsuario']; // Assumindo que o ID do usuário está arm
 
 // Obter as cidades únicas do banco de dados
 $cidades = [];
-$sql = "SELECT DISTINCT endereco.cidade FROM endereco";
+$sql = "SELECT DISTINCT cidade FROM endereco";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -37,49 +37,73 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idServico = $_POST['idServico'];
     $dataInici = $_POST['data'];
     $horario = $_POST['horario'];
     $placa = $_POST['placa'];
 
-    // Obter id_Oficina do serviço selecionado
-    $sql = "SELECT id_Oficina FROM oficinaservicos WHERE idServico = ?";
+    // Obter id_Oficina e id_Prestador do serviço selecionado
+    $sql = "SELECT oficinaservicos.id_Oficina, prestadordeservico.idPrestador 
+            FROM servico 
+            LEFT JOIN oficinaservicos ON servico.idServico = oficinaservicos.idServico 
+            LEFT JOIN prestadordeservico ON servico.id_Usuario = prestadordeservico.id_Usuario 
+            WHERE servico.idServico = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idServico);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $id_Oficina = $row['id_Oficina'];        
-        // Inserir na tabela agendamentoservicooficina
-        $sql1 = "INSERT INTO agendamentoservicooficina (id_Servico, dataInici, id_Oficina) VALUES (?, ?, ?)";
-        $stmt1 = $conn->prepare($sql1);
-        $stmt1->bind_param("isi", $idServico, $dataInici, $id_Oficina);
+        $id_Oficina = $row['id_Oficina'];
+        $id_Prestador = $row['idPrestador'];
 
-        if ($stmt1->execute()) {
-            // Obter o id_AgendamentoServicoOficina inserido
-            $idAgendamentoServicoOficina = $stmt1->insert_id;
+        // Obter o id_Veiculo com base na placa e idUsuario
+        $sql2 = "SELECT idVeiculo FROM veiculo WHERE placa = ? AND id_Usuario = ?";
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bind_param("si", $placa, $idUsuario);
+        $stmt2->execute();
+        $result = $stmt2->get_result();
 
-            // Obter o id_Veiculo com base na placa e idUsuario
-            $sql2 = "SELECT idVeiculo FROM veiculo WHERE placa = ? AND id_Usuario = ?";
-            $stmt2 = $conn->prepare($sql2);
-            $stmt2->bind_param("si", $placa, $idUsuario);
-            $stmt2->execute();
-            $result = $stmt2->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $idVeiculo = $row['idVeiculo'];
 
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $idVeiculo = $row['idVeiculo'];
+            if (!is_null($id_Oficina)) {
+                // Inserir na tabela agendamentoservicooficina
+                $sql1 = "INSERT INTO agendamentoservicooficina (id_Servico, dataInici, id_Oficina) VALUES (?, ?, ?)";
+                $stmt1 = $conn->prepare($sql1);
+                $stmt1->bind_param("isi", $idServico, $dataInici, $id_Oficina);
 
-                // Inserir na tabela agendamento
+                if ($stmt1->execute()) {
+                    // Obter o id_AgendamentoServicoOficina inserido
+                    $idAgendamentoServicoOficina = $stmt1->insert_id;
+
+                    // Inserir na tabela agendamento
+                    $sql3 = "INSERT INTO agendamento (hora, dataAgen, id_Usuario, id_Veiculo, id_AgendamentoOficina) 
+                             VALUES (?, ?, ?, ?, ?)";
+                    $stmt3 = $conn->prepare($sql3);
+                    $stmt3->bind_param("ssiii", $horario, $dataInici, $idUsuario, $idVeiculo, $idAgendamentoServicoOficina);
+
+                    if ($stmt3->execute()) {
+                        echo "Agendamento realizado com sucesso!";
+                    } else {
+                        echo "Erro ao agendar: " . $stmt3->error;
+                    }
+
+                    $stmt3->close();
+                } else {
+                    echo "Erro ao agendar o serviço na oficina: " . $stmt1->error;
+                }
+
+                $stmt1->close();
+            } else {
+                // Inserir diretamente na tabela agendamento com id_AgendamentoOficina como NULL
                 $sql3 = "INSERT INTO agendamento (hora, dataAgen, id_Usuario, id_Veiculo, id_AgendamentoOficina) 
-                         VALUES (?, ?, ?, ?, ?)";
+                         VALUES (?, ?, ?, ?, NULL)";
                 $stmt3 = $conn->prepare($sql3);
-                $stmt3->bind_param("ssiii", $horario, $dataInici, $idUsuario, $idVeiculo, $idAgendamentoServicoOficina);
+                $stmt3->bind_param("ssii", $horario, $dataInici, $idUsuario, $idVeiculo);
 
                 if ($stmt3->execute()) {
                     echo "Agendamento realizado com sucesso!";
@@ -88,24 +112,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 $stmt3->close();
-            } else {
-                echo "Veículo não encontrado.";
             }
-
-            $stmt2->close();
         } else {
-            echo "Erro ao agendar o serviço na oficina: " . $stmt1->error;
+            echo "Veículo não encontrado.";
         }
 
-        $stmt1->close();
+        $stmt2->close();
     } else {
-        echo "Oficina não encontrada para o serviço selecionado.";
+        echo "Oficina ou Prestador não encontrado para o serviço selecionado.";
     }
 
     $stmt->close();
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
 
         form {
             width: 40%;
@@ -186,17 +203,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         form {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px; /* Adiciona espaço à direita do formulário */
-}
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px; /* Adiciona espaço à direita do formulário */
+        }
 
-.planilha {
-    width: 70%; /* Tamanho da tabela */
-    margin-left: 20px; /* Adiciona espaço à esquerda da tabela */
-}
-
+        .planilha {
+            width: 70%; /* Tamanho da tabela */
+            margin-left: 20px; /* Adiciona espaço à esquerda da tabela */
+        }
 
         .back-button {
             text-align: center;
@@ -260,13 +276,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Agendamento de Serviços</h2>
     
     <div class="container">
-    <form method="post" class="mt-5">
+        <form method="post" class="mt-5">
             <div class="form-group">
                 <label for="idServico">Id Serviço:</label>
                 <input type="number" id="idServico" name="idServico" required>
-            </div>           
-            
-
+            </div>
             <div class="form-group">
                 <label for="placa">Placa:</label>
                 <select id="placa" name="placa" required>
@@ -278,17 +292,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </select>
             </div>
-            
             <div class="form-group">
                 <label for="data">Data:</label>
                 <input type="date" id="data" name="data" required>
             </div>
-            
             <div class="form-group">
                 <label for="horario">Horário:</label>
                 <input type="time" id="horario" name="horario" required>
             </div>
-            
             <div class="form-group">
                 <input type="submit" value="Agendar">
             </div>
@@ -296,7 +307,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="planilha">
             <h3>Serviços Disponíveis</h3>
-            
             <div class="filter-container">
                 <label for="cidade">Filtrar por Cidade:</label>
                 <select id="cidade" name="cidade" onchange="filterByCity()">
@@ -313,7 +323,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <thead>
                     <tr>
                         <th>idServico</th>
-                        <th>Nome da Oficina</th>
+                        <th>Nome da Oficina ou Prestador</th>
                         <th>Nome do Serviço</th>
                         <th>Descrição do Serviço</th>
                         <th>Cidade</th>
@@ -323,10 +333,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php
                     $selectedCity = isset($_GET['cidade']) ? $_GET['cidade'] : '';
 
-                    $query = "SELECT servico.idServico, pessoajuridica.nomeSocial, servico.nome, servico.descricao, endereco.cidade
+                    $query = "SELECT servico.idServico, 
+                                     COALESCE(pessoajuridica.nomeSocial, prestadordeservico.nomeCompleto) AS nomePrestador, 
+                                     servico.nome, 
+                                     servico.descricao, 
+                                     endereco.cidade
                               FROM servico 
-                              JOIN pessoajuridica ON servico.id_Usuario = pessoajuridica.id_Usuario
-                              JOIN endereco ON endereco.id_Usuario = servico.id_Usuario";
+                              LEFT JOIN pessoajuridica ON servico.id_Usuario = pessoajuridica.id_Usuario
+                              LEFT JOIN prestadordeservico ON servico.id_Usuario = prestadordeservico.id_Usuario
+                              LEFT JOIN endereco ON endereco.id_Usuario = servico.id_Usuario";
 
                     if (!empty($selectedCity)) {
                         $query .= " WHERE endereco.cidade = '$selectedCity'";
@@ -338,7 +353,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         while($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $row["idServico"] . "</td>";
-                            echo "<td>" . $row["nomeSocial"] . "</td>";                            
+                            echo "<td>" . $row["nomePrestador"] . "</td>";                            
                             echo "<td>" . $row["nome"] . "</td>";
                             echo "<td>" . $row["descricao"] . "</td>";
                             echo "<td>" . $row["cidade"] . "</td>";
@@ -351,7 +366,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
 
     <div class="back-button">
         <a href="../../login/admFisica.php" class="btn btn-secondary">Voltar</a>
@@ -359,15 +374,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script>
         function filterByCity() {
-            const cidade = document.getElementById('cidade').value;
-            window.location.href = "?cidade=" + cidade;
+            var city = document.getElementById("cidade").value;
+            var url = window.location.href.split('?')[0];
+            if (city) {
+                window.location.href = url + "?cidade=" + city;
+            } else {
+                window.location.href = url;
+            }
         }
     </script>
-
-
-
-
-
-
-
-
+</body>
+</html>

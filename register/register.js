@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var prestadorDeServicoFields = document.getElementById('prestadorDeServicoFields');
 
     function updateFields() {
+        // Esconde todos os campos adicionais
         pessoaFisicaFields.style.display = 'none';
         pessoaJuridicaFields.style.display = 'none';
         prestadorDeServicoFields.style.display = 'none';
 
+        // Exibe o campo específico de acordo com o tipo de usuário selecionado
         if (tipoUsuario.value === 'PessoaFisica') {
             pessoaFisicaFields.style.display = 'block';
         } else if (tipoUsuario.value === 'PessoaJuridica') {
@@ -18,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Chama a função quando a página é carregada
+    // Chama a função quando a página é carregada para garantir que o campo correto seja exibido
     updateFields();
 
-    // Chama a função quando o tipo de usuário é alterado
+    // Adiciona o evento de mudança para alterar os campos quando o tipo de usuário for alterado
     tipoUsuario.addEventListener('change', updateFields);
 
     // Log para depuração
