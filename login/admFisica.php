@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // Verificar se a sessão está iniciada corretamente
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.html");
@@ -10,6 +11,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <!DOCTYPE html>
 <html lang="pt-br">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +20,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/admFisica.css">
 </head>
+
 
 <body>
     <div class="header">
@@ -30,6 +33,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <h1>Bem-vindo, <?php echo ($_SESSION["username"]); ?></h1>
         <p>Mantenha as manutenções do seus veículos em dia</p>
     </div>
+
 
     <div class="container">
         <div class="row">
@@ -82,7 +86,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="card card-option">
                     <div class="card-body">
                         <a href="../users/pessoaFisica/consultaroficinas.php" class="stretched-link"></a>
-                        <img src="https://via.placeholder.com/150" alt="Consultar Oficinas/Prestadores Cadastrados" class="card-img-top">
+                        <img src="../imgs/school.png" alt="Consultar Oficinas/Prestadores Cadastrados" class="card-img-top">
                         <h5 class="card-title">Consultar Oficinas/Prestadores Cadastrados</h5>
                     </div>
                 </div>
@@ -99,9 +103,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <div class="col-md-3">
                 <div class="card card-option">
                     <div class="card-body">
-                        <a href="../users/pessoaFisica/atualizarOficina.php" class="stretched-link"></a>
-                        <img src="../imgs/data-processing.png" alt="Atualizar meus dados cadastrais" class="card-img-top">
-                        <h5 class="card-title">Atualizar meus dados cadastrais</h5>
+                        <a href="../users/pessoaFisica/C_orc_agend.php" class="stretched-link"></a>
+                        <img src="../imgs/data-processing.png" alt="Consultar Agendamentos Orcamentos" class="card-img-top">
+                        <h5 class="card-title">Consultar Agendamentos e Orçamentos </h5>
                     </div>
                 </div>
             </div>
@@ -112,4 +116,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <script src="../login/selecionaPerfil.js"></script>
 </body>
 
+
 </html>
+

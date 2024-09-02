@@ -10,7 +10,4 @@
     if(!$conn){
         echo 'Erro ao conectar ao banco de dados';
     }
-    else{
-        echo 'Conexão efetuada realizada com sucesso';
-    }
 ?>

@@ -26,13 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
         $stmt->close();   
 
-
         // Verifica se a placa já existe
         $stmt = $conn->prepare("SELECT idVeiculo FROM veiculo WHERE placa = ?");
         $stmt->bind_param("s", $placa);
         $stmt->execute();
         $stmt->store_result();
-
 
         if ($stmt->num_rows > 0) {
             echo "Erro: A placa já está cadastrada.";
@@ -67,58 +65,122 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Veículo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .btn-secondary {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #6c757d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin-top: 15%; /* Aumenta a margem superior em telas menores */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                margin-top: 20%; /* Aumenta ainda mais a margem superior para telas pequenas */
+            }
+            button {
+                font-size: 14px; /* Ajuste do tamanho da fonte em telas pequenas */
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1 class="m-0">Cadastro de Veículo</h1>
-    <p class="small">Informe os dados do veículo.</p>
+    <div class="container">
+        <h1>Cadastro de Veículo</h1>
+        <p>Informe os dados do veículo.</p>
 
-    <form method="post" class="mt-5">
-        <div class="mb-5">
+        <form method="post">
             <label for="modelo">
                 Modelo:
-                <br>
-                <input class="form-control mt-3" type="text" id="modelo" name="modelo">
+                <input type="text" id="modelo" name="modelo">
             </label>
-        </div>
 
-        <div class="mb-5">
             <label for="ano">
                 Ano:
-                <br>
-                <input class="form-control mt-3" type="number" id="ano" name="ano">
+                <input type="number" id="ano" name="ano">
             </label>
-        </div>
 
-        <div class="mb-5">
             <label for="placa">
                 Placa:
-                <br>
-                <input class="form-control mt-3" type="text" id="placa" name="placa">
+                <input type="text" id="placa" name="placa">
             </label>
-        </div>
 
-        <div class="mb-5">
             <label for="cor">
                 Cor:
-                <br>
-                <input class="form-control mt-3" type="text" id="cor" name="cor">
+                <input type="text" id="cor" name="cor">
             </label>
-        </div>
 
-        <div class="mb-5">
             <button type="submit">Enviar</button>
-        </div>
+        </form>
 
-        
-    </table>
-
-    <!-- Botão Voltar -->
-    <div style="margin-top: 20px;">
         <a href="../../login/admFisica.php" class="btn btn-secondary">Voltar</a>
     </div>
-
-    </form>
 </body>
 
 </html>

@@ -72,6 +72,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </div>
                 </div>
             </div>
+            
+            <div class="col-md-3">
+                <div class="card card-option">
+                    <div class="card-body">
+                        <a href="../users/pessoaJuridica/C_orc_agend.php" class="stretched-link"></a>
+                        <img src="../imgs/data-processing.png" alt="Consultar Agendamentos Orcamentos" class="card-img-top">
+                        <h5 class="card-title">Consultar Agendamentos e Orçamentos </h5>
+                    </div>
+                </div>
+            </div>
         </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
